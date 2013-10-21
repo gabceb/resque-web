@@ -37,9 +37,9 @@ If you need a non-default resque server, use this environment variable.
 ```
 RAILS_RESQUE_REDIS=123.x.0.456:6712
 ```
-#### Security
+## Security
 
-You almost certainly want to limit access when using Resque-web in production. Using [routes constraints](http://guides.rubyonrails.org/routing.html#request-based-constraints) is one way to achieve this:
+You almost certainly want to limit access when using resque-web in production. Using [routes constraints](http://guides.rubyonrails.org/routing.html#request-based-constraints) is one way to achieve this:
 
 ```ruby
 # config/routes.rb
@@ -54,8 +54,7 @@ end
 Another example of a route constrain using the current_user when using Devise or another warden based authentication system:
 
 ```ruby
-# initializers/admin_access.rb
-
+# initializers/resque_access.rb
 class CanAccessResqueWeb
   def self.matches?(request)
     current_user = request.env['warden'].user
@@ -65,7 +64,6 @@ class CanAccessResqueWeb
 end
 
 # config/routes.rb
-
 constraints CanAccessResqueWeb do
   mount ResqueWeb::Engine => "/resque_web"
 end
