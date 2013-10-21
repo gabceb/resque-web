@@ -51,7 +51,7 @@ end
 
 ```
 
-Another example of a route constrain using the current_user when using Devise or another warden based authentication system:
+Another example of a route constraint using the current_user when using Devise or another warden based authentication system:
 
 ```ruby
 # initializers/resque_access.rb
