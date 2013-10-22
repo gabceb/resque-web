@@ -51,20 +51,17 @@ end
 
 ```
 
-Another example of a route constraint using the current_user when using Devise or another warden based authentication system:
+Another example of a route constraint using the current user when using Devise or another warden based authentication system:
 
 ```ruby
-# initializers/resque_access.rb
-class CanAccessResqueWeb
-  def self.matches?(request)
-    current_user = request.env['warden'].user
-    
-    return current_user.present? && current_user.respond_to?(:is_admin?) && current_user.is_admin?
-  end
+# config/routes.rb
+resque_web_constraint = lambda do |request|
+	current_user = request.env['warden'].user
+
+	current_user.present? && current_user.respond_to?(:is_admin?) && current_user.is_admin?
 end
 
-# config/routes.rb
-constraints CanAccessResqueWeb do
+constraints resque_web_constraint do
   mount ResqueWeb::Engine => "/resque_web"
 end
 
